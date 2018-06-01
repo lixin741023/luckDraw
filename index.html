@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新年大放送！欢乐抽大奖</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="disk/plugin/jquery-3.2.1.min.js"></script>
+		<link href="disk/plugin/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+		<script src="disk/plugin/vue.js"></script>
+
+		<link href="disk/css/index.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="bg">
+			<div style="background-image: url(disk/img/input1.png); visibility: hidden; display: none; "></div>
+			<!--zzc1-->
+			<div id="zzc1">
+				<!--活动介绍框体-->
+				<div class="zzc1_guide" v-if="zzc1_guide_if">
+					<div class="zzc1_guide_top">
+						<p style="font-size: 14px; text-shadow: 2px 2px 2px #ccc;">活动介绍：</p>
+						<p>1、本次抽奖赢茶叶活动由“九和茶庄”微信公众号举办。</p>
+						<p>2、凡关注“九和茶庄”公众号的朋友，可在2月3日至2月5日参与抽奖活动，每天均有1次抽奖机会，可重复中奖！</p>
+						<p style="margin-top: 20px; font-size: 14px; text-shadow: 2px 2px 2px #ccc;">参与方式：</p>
+						<p>1、关注公众号进入抽奖页面，输入手机号即可参与抽奖。</p>
+						<p>2、中奖后请正确填写您的收货地址。</p>
+						<p>3、中奖礼物我们将在活动结束后统一发送给您。</p>
+						<p style="margin-top: 40px; padding: 0 15px; color: red; text-shadow: 2px 2px 2px #ccc;">手机号将与本次抽奖活动绑定，请确认输入自己的手机号</p>
+					</div>
+					<input class="zzc_input btn btn-block input-lg end120" type="text" placeholder="请输入您的手机号码" v-model="phone_number"/>
+					<input class="zzc_input btn btn-block input-lg btn-primary" type="button" value="确认" @click="phoneUP()"/>
+				</div>
+				<!--中奖提示信息-->
+				<div class="zzc1_luck" v-if="zzc1_luck_if">
+					<h3>恭喜您！<span>{{phone_number}}</span></h3>
+					<p>成功抽得{{lv}}<span> “{{prize}}” </span>({{money}})</p>
+					<hr />
+					<p></p>
+					<div class="lx_input">
+						<input class="btn btn-primary" type="button" value="下一步" @click="zzc1_form_show"/>
+					</div>
+				</div>
+				<!--中奖表单填写-->
+				<div class="zzc1_form" v-if="zzc1_form_if">
+					<form action="form.php">
+					<p style="color: red; margin: 15px 0 0;">中奖礼物真实有效，我们将通过快递发送。</p>
+					<p style="color: red; margin: 10px 0 0;">请认真填写以下表单，确保您能够顺利收到礼物:</p>
+					<hr style="margin-top: 5px;" />
+					<div class="form-group">
+						<label>姓名：</label>
+						<input class="form-control" type="text" placeholder="请输入您的姓名" maxlength="6" required="required" name="phone_name" />
+					</div>
+					<div class="form-group">
+						<label>性别：</label>
+						<label class="radio-inline">
+  							<input type="radio" name="phone_sex" value="1" required="required">男
+						</label>
+						<label class="radio-inline" style="margin-left: 20px;">
+  							<input type="radio" name="phone_sex" value="2" required="required">女
+						</label>
+					</div>
+					<div class="form-group">
+						<div><label>收货地址：</label></div>
+						<select class="form-control lx_province" style="display: inline-block;width: 58%;" required="required" name="phone_province">
+	    				</select>
+	    				<select class="form-control lx_city"  style="display: inline-block;width: 40%;" required="required" name="phone_city">
+	    				</select>
+	    				<div style="margin-top: 15px;">
+	    					<input class="form-control " type="text" placeholder="详细地址" required="required" maxlength="30" name="phone_address"/>
+	    				</div>
+					</div>
+					<hr />
+					<div class="lx_input">
+						<input class="btn btn-primary" type="submit" value="提交" @click="end"/>
+					</div>
+					<input id="lx" name="phone" style="display: none;" v-model="phone_number" />
+					</form>
+				</div>
+			</div>
+			<div class="phone_number_title">幸运用户：{{phone_number}}</div>
+			<!--<div class="phone_number_title" style="top: 40px;">可抽奖次数：{{draw_number}}</div>-->
+			<img src="disk/img/bg.jpg" />
+			<div class="box">
+				<div class="title">初始礼物</div>
+				<ul>
+					<li class="end">{{prize}}</li>
+				</ul>
+			</div>
+			<div class="giftLV_info">
+				<li>中奖几率高达<span style="font-weight: bold; font-size: 22px;">30%</span></li>
+				<li style="margin-top: 10px;">一等奖**********金牡丹*100g</li>
+				<li>二等奖**********水<span style="visibility: hidden;">仙</span>仙*100g</li>
+				<li>三等奖**********小青柑*100g</li>
+				<li>四等奖**********铁观音*100g</li>
+			</div>
+			<div class="start">开始抽奖</div>
+		</div>
+	</body>
+	<script src="disk/js/data.js"></script>
+	<script src="disk/js/index.js"></script>
+</html>

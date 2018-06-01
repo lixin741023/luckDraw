@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>中奖用户查看</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="disk/plugin/jquery-3.2.1.min.js"></script>
+		<link href="disk/plugin/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+		<script src="disk/plugin/vue.js"></script>
+		<style>
+			ul li{
+				margin-top: 10px;
+			}
+			.dd p{
+				margin-left: 40px;
+			}
+			table tbody tr td:nth-child(4){
+				font-weight: bold;
+			}
+			table tbody tr td:nth-child(1){
+				padding-left: 15px;
+				letter-spacing: 2px;
+			}
+		</style>
+	</head>
+	<body style="padding: 20px;">
+		<input id="quer" class="btn btn-primary" type="button"  value="获取中奖用户" style="width: 300px;" />
+		<ul style="border: 1px solid #ccc; margin-top: 10px;">
+			<li>性别：1（男）、2（女）</li>
+			<li class="dd">中奖礼物：
+				<p>A（一等奖）---<strong>金牡丹*100g</strong>---<em>价值440元</em>;</p>
+				<p>B（二等奖）---<strong>水仙*100g</strong>---<em>价值170元</em>;</p>
+				<p>C（三等奖）---<strong>小青柑*100g</strong>---<em>价值100元</em>;</p>
+				<p>D（四等奖）---<strong>铁观音*100g</strong>---<em>价值76元</em>;</p>
+				<p>E（未中奖）</p>
+			</li>
+		</ul>
+		<table class="table table-bordered table-condensed" style="margin-top: 20px;">
+			<thead>
+				<tr>
+					<td>手机号</td>
+					<td>姓名</td>
+					<td>性别</td>
+					<td>抽奖日期</td>
+					<td>中奖礼物</td>
+					<td>地址</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="property in user_arr">
+					<td>{{property.phone}}</td>
+					<td>{{property.name}}</td>
+					<td>{{property.sex}}</td>
+					<td>{{property.draw_time}}</td>
+					<td>{{property.gifts}}</td>
+					<td>{{property.home}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+	<script>
+		$("#quer").click(function(){
+			v.user_arr=[];
+			var xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=function(){
+				console.log(xhr.readyState);
+				console.log(xhr.status);
+				if(xhr.readyState==4){
+					var obj=JSON.parse(xhr.responseText);
+					for(var i=0; i<obj.length; i++){
+						v.user_arr.push(obj[i]);
+					};
+				};
+			};
+			xhr.open("GET","luckuser.php",true);
+			xhr.send();
+		});
+		
+		var v=new Vue({
+			el:".table",
+			data:{
+				user_arr:[]
+			}
+		})
+	</script>
+</html>
